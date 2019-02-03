@@ -9,5 +9,8 @@ cache:
   directories:
     - ~/.cache/composer
 
+install:
+  - composer install
+
 script:
   - vendor/bin/grumphp run
