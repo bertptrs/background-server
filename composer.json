@@ -1,0 +1,25 @@
+{
+    "name": "bertptrs/background-server",
+    "description": "Run server processes in the background of your own",
+    "type": "library",
+    "require-dev": {
+        "phpro/grumphp": "^0.14.3",
+        "friendsofphp/php-cs-fixer": "^2.14",
+        "jakub-onderka/php-parallel-lint": "^1.0"
+    },
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Bert Peters",
+            "email": "bert@bertptrs.nl"
+        }
+    ],
+    "require": {
+        "php": "^7.0"
+    },
+    "autoload": {
+        "psr-4": {
+            "bertptrs\\BackgroundServer\\": "src"
+        }
+    }
+}
