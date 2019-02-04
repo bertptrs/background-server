@@ -1,6 +1,9 @@
 <?php
 
-namespace bertptrs\BackgroundServer;
+namespace bertptrs\background_server;
+
+use bertptrs\background_server\error\NotStartedException;
+use bertptrs\background_server\error\TimeoutException;
 
 interface BackgroundServer
 {
@@ -17,4 +20,14 @@ interface BackgroundServer
      * @return bool true if it was originally running.
      */
     public function stop(): bool;
+
+    /**
+     * Wait until the process is ready.
+     *
+     * @param float $timeout Time unt
+     * @throws NotStartedException
+     * @throws TimeoutException
+     * @return bool
+     */
+    public function awaitReady(float $timeout): bool;
 }

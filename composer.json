@@ -5,7 +5,8 @@
     "require-dev": {
         "phpro/grumphp": "^0.14.3",
         "friendsofphp/php-cs-fixer": "^2.14",
-        "jakub-onderka/php-parallel-lint": "^1.0"
+        "jakub-onderka/php-parallel-lint": "^1.0",
+        "phpunit/phpunit": "^6.5"
     },
     "license": "MIT",
     "authors": [
@@ -19,7 +20,12 @@
     },
     "autoload": {
         "psr-4": {
-            "bertptrs\\BackgroundServer\\": "src"
+            "bertptrs\\background_server\\": "src"
+        }
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "bertptrs\\background_server\\tests\\": "tests"
         }
     }
 }

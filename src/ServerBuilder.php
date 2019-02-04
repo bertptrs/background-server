@@ -1,6 +1,6 @@
 <?php
 
-namespace bertptrs\BackgroundServer;
+namespace bertptrs\background_server;
 
 final class ServerBuilder
 {
@@ -12,6 +12,7 @@ final class ServerBuilder
         1 => STDOUT,
         2 => STDERR,
     ];
+    private $checkers = [];
 
     public function __construct(string $executable)
     {
@@ -37,9 +38,9 @@ final class ServerBuilder
      * @param bool $kill whether to kill it, default true.
      * @return ServerBuilder $this
      */
-    public function killOnExit(bool $kill = true): self
+    public function killOnExit($kill = true): self
     {
-        $this->killOnExit = $kill;
+        $this->killOnExit = (bool) $kill;
         return $this;
     }
 
@@ -56,7 +57,7 @@ final class ServerBuilder
             });
         }
 
-        return new BackgroundServerImpl($process);
+        return new BackgroundServerImpl($process, $this->checkers);
     }
 
     /**
