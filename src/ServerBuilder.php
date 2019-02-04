@@ -2,6 +2,9 @@
 
 namespace bertptrs\background_server;
 
+use bertptrs\background_server\error\NotStartedException;
+use bertptrs\background_server\readiness\PortCheck;
+
 final class ServerBuilder
 {
     private $executable = null;
@@ -40,7 +43,7 @@ final class ServerBuilder
      */
     public function killOnExit($kill = true): self
     {
-        $this->killOnExit = (bool) $kill;
+        $this->killOnExit = (bool)$kill;
         return $this;
     }
 
@@ -48,7 +51,7 @@ final class ServerBuilder
     {
         $process = proc_open('exec ' . $this->executable, $this->descriptors, $pipes, null, $this->env);
         if (!$process) {
-            throw new \RuntimeException("Failed to create process");
+            throw new NotStartedException('Failed to create process');
         }
 
         if ($this->killOnExit) {
@@ -58,6 +61,31 @@ final class ServerBuilder
         }
 
         return new BackgroundServerImpl($process, $this->checkers);
+    }
+
+    /**
+     * Add a general purpose readiness check to this build.
+     *
+     * @param ReadinessCheck $check The check to add
+     * @return ServerBuilder this
+     */
+    public function addReadinessCheck(ReadinessCheck $check): self
+    {
+        $this->checkers[] = $check;
+        return $this;
+    }
+
+    /**
+     * Add a port check to the readiness checks.
+     *
+     * @param string $host
+     * @param int $port
+     * @return ServerBuilder
+     */
+    public function checkPort(string $host, int $port): self
+    {
+        $this->checkers[] = new PortCheck($host, $port);
+        return $this;
     }
 
     /**
