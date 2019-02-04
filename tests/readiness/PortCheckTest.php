@@ -34,4 +34,18 @@ class PortCheckTest extends TestCase
 
         $this->assertTrue($instance->awaitReady(2));
     }
+
+    /**
+     * Test whether a timeout is properly handled.
+     *
+     * @depends testPortCheck
+     */
+    public function testPortCheckTimeout()
+    {
+        $instance = new PortCheck('localhost', 6464);
+
+        // Very short timeout for testing convenience
+        $this->assertFalse($instance->awaitReady(0.1));
+        $this->assertFalse($instance->isReady());
+    }
 }
